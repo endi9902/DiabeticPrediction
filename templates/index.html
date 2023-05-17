@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aplikacja diagnostyki cukrzycy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Aplikacja diagnostyki cukrzycy</h1>
+    <form method="POST">
+        <label>{{ question }}</label>
+
+        {% if question == "Wybierz płeć:" %}
+        <label><input type="radio" name="answer" value="Tak">Kobieta</label>
+        <label><input type="radio" name="answer" value="Nie">Mężczyzna</label>
+        {% elif question == "Wpisz swój wiek:" %}
+        <input type="text" name="answer">
+        {% elif question == "Czy masz wysokie ciśnienie krwi?" %}
+        <label><input type="radio" name="answer" value="Tak"> Tak</label>
+        <label><input type="radio" name="answer" value="Nie"> Nie</label>
+        {% elif question == "Wpisz swoje BMI. Możesz je obliczyć w zakładce BMI." %}
+        <input type="text" name="answer">
+        {% elif question == "Czy palisz papierosy?" %}
+        <label><input type="radio" name="answer" value="Tak"> Tak</label>
+        <label><input type="radio" name="answer" value="Nie"> Nie</label>
+        {% elif question == "Czy uprawiasz jakąś aktywność fizyczną?" %}
+        <label><input type="radio" name="answer" value="Tak"> Tak</label>
+        <label><input type="radio" name="answer" value="Nie"> Nie</label>
+        {% elif question == "Czy uwzględniasz w swojej diecie świeże owoce?" %}
+        <label><input type="radio" name="answer" value="Tak"> Tak</label>
+        <label><input type="radio" name="answer" value="Nie"> Nie</label>
+        {% elif question == "Czy uwzględniasz w swojej diecie świeże warzywa?" %}
+        <label><input type="radio" name="answer" value="Tak"> Tak</label>
+        <label><input type="radio" name="answer" value="Nie"> Nie</label>
+        {% elif question == "Jakie jest twoje ogólne samopoczucie w skali od 0 do 5?" %}
+        <input type="text" name="answer">
+        {% elif question == "Jakie jest twoje psychiczne samopoczucie w skali od 0 do 30?" %}
+        <input type="text" name="answer">
+        {% elif question == "Jakie jest twoje samopoczucie fizyczne w skali od 0 do 30?" %}
+        <input type="text" name="answer">
+        {% endif %}
+
+        <input type="submit" value="Sprawdź">
+    </form>
+</body>
+</html>
