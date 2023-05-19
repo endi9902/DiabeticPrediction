@@ -23,6 +23,6 @@ model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
 
-new_data = pd.DataFrame([[0, 40, 1, 25, 1, 1, 3, 2, 3, 2, 0]], columns=X_test.columns)
+new_data = pd.DataFrame([[1.0,7.0,1.0,19.0,1.0,0.0,0.0,1.0,5.0,25.0,25.0]], columns=X_train.columns)
 prediction = model.predict(new_data)
 print("Przewidywany status cukrzycowy:", prediction)

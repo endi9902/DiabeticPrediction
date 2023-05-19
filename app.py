@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request
 import joblib
+import pandas as pd
+from sklearn.svm import SVC
 app = Flask(__name__)
 
 # Załaduj model SVM
@@ -18,33 +20,41 @@ questions = [
     "Jakie jest twoje ogólne samopoczucie w skali od 0 do 5?",
     "Jakie jest twoje psychiczne samopoczucie w skali od 0 do 30?",
     "Jakie jest twoje samopoczucie fizyczne w skali od 0 do 30?",
-    # Dodaj kolejne pytania tutaj
 ]
-
-# Inicjalizuj zmienną przechowującą odpowiedzi
 answers = []
 
 @app.route('/form', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        # Zapisz odpowiedź użytkownika
         user_answer = request.form['answer']
         answers.append(user_answer)
         
-        # Przejdź do kolejnego pytania lub wykonaj analizę
         if len(answers) < len(questions):
             return render_template('index.html', question=questions[len(answers)])
         else:
-            # Wykonaj analizę przy użyciu algorytmu SVM
-            # prediction = svm_model.predict([answers])  # Przykład przekazania odpowiedzi jako wektora cech dla SVM
-            # Zwróć odpowiedź na podstawie wyniku analizy
+            data = pd.DataFrame(columns=['Sex', 'Age', 'HighBP', 'BMI', 'Smoker', 'PhysActivity', 'Fruits', 'Veggies', 'GenHlth', 'MentHlth', 'PhysHlth'])
+            sex = answers[0]
+            age = answers[1]
+            highBP = answers[2]
+            bmi = answers[3]
+            smoker = answers[4]
+            physActivity = answers[5]
+            fruits = answers[6]
+            veggies = answers[7]
+            genHlth = answers[8]
+            mentHlth = answers[9]
+            physHlth = answers[10]
+            new_data = {'Sex': [sex], 'Age': [age], 'HighBP': [highBP], 'BMI':[bmi], 'Smoker': [smoker], 'PhysActivity':[physActivity], 'Fruits': [fruits], 'Veggies':[veggies], 'GenHlth':[genHlth], 'MentHlth':[mentHlth], 'PhysHlth':[physHlth] }
+            data = pd.DataFrame(new_data)
+            # prediction = SVC.predict([answers])  
             # if prediction == 1:
             #     result = "Istnieje ryzyko, że jesteś chory na cukrzycę typu 2."
             # else:
             #     result = "Ryzyko cukrzycy typu 2 jest niskie."
             
-            # Wyświetl wynik użytkownikowi
-            return render_template('result.html', result=result)
+            # return render_template('result.html', result=result)
+            print("Wprowadzone dane:")
+            print(data)
     
     return render_template('index.html', question=questions[0])
 
