@@ -15,12 +15,10 @@ nowa_kolejnosc = ['Sex', 'Age', 'HighBP', 'BMI', 'Smoker', 'PhysActivity', 'Frui
 # Zmiana kolejności kolumn
 df = df[nowa_kolejnosc]
 
-# Zapisanie zmodyfikowanej ramki danych do pliku CSV
 df.to_csv('baza-preprocessing.csv', index=False)
 
 df_new = pd.read_csv('baza-preprocessing.csv')
 czy_brakujace_wiersze = df_new.isnull().any(axis=1)
 wiersze_brakujace = df[czy_brakujace_wiersze]
 print(wiersze_brakujace)
-# Wyświetlanie zmodyfikowanej ramki danych
 # print(df)
