@@ -2,6 +2,9 @@ from flask import Flask, render_template, request
 import joblib
 import pandas as pd
 from sklearn.svm import SVC
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 app = Flask(__name__)
 
 # Załaduj model SVM
@@ -45,16 +48,29 @@ def index():
             mentHlth = answers[9]
             physHlth = answers[10]
             new_data = {'Sex': [sex], 'Age': [age], 'HighBP': [highBP], 'BMI':[bmi], 'Smoker': [smoker], 'PhysActivity':[physActivity], 'Fruits': [fruits], 'Veggies':[veggies], 'GenHlth':[genHlth], 'MentHlth':[mentHlth], 'PhysHlth':[physHlth] }
-            data = pd.DataFrame(new_data)
+            train_data = pd.read_csv('train.csv')
+
+            test_data = pd.read_csv('test.csv')
+
+            X_train = train_data.drop('Diabetes_012', axis=1)
+            y_train = train_data['Diabetes_012']
+
+
+            X_test = test_data.drop('Diabetes_012', axis=1)
+            y_test = test_data['Diabetes_012']
+
+            model = RandomForestClassifier()
+            model.fit(X_train, y_train)
+            data = pd.DataFrame(new_data, columns=X_train.columns)
+            prediction = model.predict(data)
             # prediction = SVC.predict([answers])  
-            # if prediction == 1:
-            #     result = "Istnieje ryzyko, że jesteś chory na cukrzycę typu 2."
-            # else:
-            #     result = "Ryzyko cukrzycy typu 2 jest niskie."
-            
+            if prediction == 2:
+                result = "Istnieje ryzyko, że jesteś chory na cukrzycę typu 2."
+            else:
+                result = "Ryzyko cukrzycy typu 2 jest niskie."
+            print(result)
             # return render_template('result.html', result=result)
-            print("Wprowadzone dane:")
-            print(data)
+
     
     return render_template('index.html', question=questions[0])
 
