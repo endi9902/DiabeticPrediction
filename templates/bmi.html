@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sprawdź, czy istnieje u Ciebie ryzyko zachorowania na cukrzyce typu 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: indigo;
+            color: white;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kalkulator BMI</h1>
+    <form method="POST">
+        <label>{{ question_BMI }}</label>
+        {% if question_BMI == "Podaj swoją wagę (kg):" %}
+        <input type="text" name="answer_BMI">
+        {% elif question_BMI == "Podaj swój wzrost (m2):" %}
+        <input type="text" name="answer_BMI">
+        {% endif %}
+
+        <input type="submit" value="Sprawdź">
+    </form>
+</body>
+</html>

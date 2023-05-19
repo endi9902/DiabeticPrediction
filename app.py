@@ -5,6 +5,7 @@ from sklearn.svm import SVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+import calculate_bmi
 app = Flask(__name__)
 
 # Załaduj model SVM
@@ -25,6 +26,13 @@ questions = [
     "Jakie jest twoje samopoczucie fizyczne w skali od 0 do 30?",
 ]
 answers = []
+
+questions_BMI = [
+    "Podaj swoją wagę (kg):",
+    "Podaj swój wzrost (m2):",
+]
+answers_BMI = []
+
 
 @app.route('/form', methods=['GET', 'POST'])
 def index():
@@ -78,6 +86,23 @@ def index():
 @app.route('/', methods=['GET','POST'])
 def gender():
     return render_template('main.html')
+
+@app.route('/bmi', methods=['GET','POST'])
+def calculate():
+    if request.method == 'POST':
+        user_answer_BMI = request.form['answer_BMI']
+        answers_BMI.append(user_answer_BMI)
+        
+        if len(answers_BMI) < len(questions_BMI):
+            return render_template('bmi.html', question_BMI=questions_BMI[len(answers_BMI)])
+        else:  
+            weight = answers_BMI[0]
+            height = answers_BMI[1]
+            bmi = calculate_bmi.calculate_bmi.calculate_bmi(weight, height)
+        print(bmi)
+        # return render_template('bmi.html',bmi=bmi)
+
+    return render_template('bmi.html', question_BMI=questions_BMI[0])
 
 if __name__ == '__main__':
     app.run()
