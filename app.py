@@ -16,7 +16,7 @@ app = Flask(__name__)
 # svm_model = joblib.load('svm_model.pkl')
 app.secret_key = 'cairocoders-ednalan'
  
-conn = psycopg2.connect(host='localhost', port=5433, database='Diabetes', user='postgres', password='')
+conn = psycopg2.connect(host='localhost', port=5433, database='Diabetes', user='postgres', password='postgres')
 
 
 
